@@ -1,25 +1,43 @@
-import React from "react";
+import React, { useState, useRef } from "react";
+import Form from "./Form";
 
 const Array = () => {
-  const array = [
+  const [students, setStudents] = useState([
     {
-      name: "a",
-      num: 1,
+      name: "",
+      num: 0,
+      id: 1,
     },
-    {
-      name: "b",
-      num: 2,
-    },
-  ];
+  ]);
 
-  const render = array.map((item, i) => (
-    <div key={i}>
-      <div>{item.name}</div>
-      <div>{item.num}</div>
+  const items = students.map((item) => (
+    <div key={item.id}>
+      <div>이름 : {item.name}</div>
+      <div>번호 : {item.num}</div>
+      <button
+        onClick={() => {
+          onRemove(item.id);
+        }}
+      >
+        X
+      </button>
+      <br />
+      <br />
     </div>
   ));
 
-  return <div>{render}</div>;
+  const onRemove = (id) => {
+    setStudents(students.filter((item) => item.id !== id));
+  };
+
+  const arrayId = useRef(2);
+
+  return (
+    <div>
+      <Form students={students} setStudents={setStudents} idx={arrayId} />
+      {items}
+    </div>
+  );
 };
 
 export default Array;

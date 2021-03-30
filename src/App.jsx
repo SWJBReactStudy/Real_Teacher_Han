@@ -14,7 +14,6 @@ const App = () => {
       <button onClick={() => setCount(count - 1)}>-</button>
 
       <Render count={[count, setCount]} />
-      <Form />
       <Array />
     </div>
   );
