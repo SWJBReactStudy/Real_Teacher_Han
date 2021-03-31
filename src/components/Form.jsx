@@ -32,25 +32,17 @@ const Form = ({ students, setStudents, idx }) => {
     });
   };
 
+  const { name, num } = inputs;
+
   return (
     <div>
       <label>이름</label>
-      <input
-        type="text"
-        onChange={onChangeInput}
-        value={inputs.name}
-        name="name"
-      />
+      <input type="text" onChange={onChangeInput} value={name} name="name" />
 
       <br />
 
       <label>번호</label>
-      <input
-        type="text"
-        onChange={onChangeInput}
-        value={inputs.num}
-        name="num"
-      />
+      <input type="text" onChange={onChangeInput} value={num} name="num" />
 
       <br />
 
