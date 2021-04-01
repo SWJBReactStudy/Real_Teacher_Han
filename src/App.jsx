@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Render from "./components/Render";
 import Form from "./components/Form";
+import Array from "./components/Array";
 
 const App = () => {
   const [count, setCount] = useState(0);
@@ -13,7 +14,7 @@ const App = () => {
       <button onClick={() => setCount(count - 1)}>-</button>
 
       <Render count={[count, setCount]} />
-      <Form />
+      <Array />
     </div>
   );
 };
