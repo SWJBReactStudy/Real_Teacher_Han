@@ -4,6 +4,7 @@ import React, {
   useMemo,
   useEffect,
   useCallback,
+  useReducer,
 } from "react";
 import User from "./User";
 
@@ -12,57 +13,92 @@ const countActiveUsers = (users) => {
   return users.filter((user) => user.active).length;
 };
 
-const List = () => {
-  const [inputs, setInputs] = useState({
+const initialState = {
+  inputs: {
     name: "",
     email: "",
-  });
+  },
+  users: [],
+};
 
-  const [users, setUsers] = useState([]);
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "CHANGE_INPUT":
+      return {
+        ...state,
+        inputs: {
+          ...state.inputs,
+          [action.name]: action.value,
+        },
+      };
+    case "CREATE_USER":
+      return {
+        ...state,
+        users: [...state.users, action.user],
+      };
+    case "REMOVE_USER":
+      return {
+        ...state,
+        users: state.users.filter((user) => user.id !== action.id),
+      };
+    case "TOGGLE_USER":
+      return {
+        ...state,
+        users: state.users.map((user) =>
+          user.id === action.id ? { ...user, active: !user.active } : user
+        ),
+      };
+    default:
+      return state;
+  }
+};
 
-  const [count, setCount] = useState(0);
+const List = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const { name, email } = inputs;
+  const { name, email } = state.inputs;
+  const { users } = state;
 
-  const onChangeInput = useCallback(
-    (e) => {
-      const { name, value } = e.target;
-      setInputs({
-        ...inputs,
-        [name]: value,
-      });
-    },
-    [users]
-  );
+  const onChangeInput = useCallback((e) => {
+    const { name, value } = e.target;
+    dispatch({
+      type: "CHANGE_INPUT",
+      name,
+      value,
+    });
+  }, []);
 
   const userID = useRef(1);
 
   const onClickCreate = () => {
-    const user = {
-      name,
-      email,
-      id: userID.current,
-      active: false,
-    };
-    setUsers([...users, user]);
+    dispatch({
+      type: "CREATE_USER",
+      user: {
+        name,
+        email,
+        id: userID.current,
+      },
+    });
 
     userID.current += 1;
   };
 
-  const onRemove = (id) => {
-    setUsers(users.filter((user) => user.id !== id));
-  };
+  const onRemove = useCallback((id) => {
+    dispatch({
+      type: "REMOVE_USER",
+      id,
+    });
+  }, []);
 
-  const onToggle = (id) => {
-    setUsers(
-      users.map((user) =>
-        user.id === id ? { ...user, active: !user.active } : user
-      )
-    );
-  };
+  const onToggle = useCallback((id) => {
+    dispatch({
+      type: "TOGGLE_USER",
+      id,
+    });
+  }, []);
 
-  useEffect(() => {
-    setCount(countActiveUsers(users));
+  const count = useMemo(() => {
+    return countActiveUsers(users);
   }, [users]);
 
   return (
