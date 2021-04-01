@@ -1,4 +1,10 @@
-import React, { useRef, useState, useMemo, useEffect } from "react";
+import React, {
+  useRef,
+  useState,
+  useMemo,
+  useEffect,
+  useCallback,
+} from "react";
 import User from "./User";
 
 const countActiveUsers = (users) => {
@@ -18,13 +24,16 @@ const List = () => {
 
   const { name, email } = inputs;
 
-  const onChangeInput = (e) => {
-    const { name, value } = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
-  };
+  const onChangeInput = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      setInputs({
+        ...inputs,
+        [name]: value,
+      });
+    },
+    [users]
+  );
 
   const userID = useRef(1);
 
