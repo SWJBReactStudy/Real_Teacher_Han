@@ -3,6 +3,7 @@ import Render from "./components/Render";
 import Form from "./components/Form";
 import Array from "./components/Array";
 import List from "./components/useMemo/List";
+import Effect from "./components/Effect";
 
 const App = () => {
   const [count, setCount] = useState(0);
@@ -19,6 +20,10 @@ const App = () => {
 
       <h3>useMemo</h3>
       <List />
+
+      <br/>
+
+      <Effect />
     </div>
   );
 };
