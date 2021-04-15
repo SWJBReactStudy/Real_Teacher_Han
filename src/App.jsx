@@ -5,6 +5,7 @@ import Array from "./components/Array";
 import List from "./components/useMemo/List";
 import Effect from "./components/Effect";
 import Styled from "./components/Styled";
+import { StudentsProvider } from "./Context/StudentsProvider";
 
 const App = () => {
   const [count, setCount] = useState(0);
@@ -12,20 +13,23 @@ const App = () => {
 
   return (
     <div>
-      <div>{count}</div>
-      <button onClick={() => setCount(count + 1)}>+</button>
-      <button onClick={() => setCount(count - 1)}>-</button>
+      <StudentsProvider>
+        <div>{count}</div>
+        <button onClick={() => setCount(count + 1)}>+</button>
+        <button onClick={() => setCount(count - 1)}>-</button>
 
-      {/* <Render count={[count, setCount]} />
+        {/* <Render count={[count, setCount]} />
       <Array /> */}
 
-      {/*<h3>useMemo</h3>
+        {/*<h3>useMemo</h3>
       <List />
-
+        
       <br/>
 
       <Effect />*/}
-      <Styled />
+        <Array />
+        <Styled />
+      </StudentsProvider>
     </div>
   );
 };

@@ -1,48 +1,51 @@
-import React, { useState } from "react";
+import React from "react";
+import useInputs from "./customHooks/useInputs";
+import { useStudentsDispatch, useStudentId } from "../Context/StudentsProvider";
 
-const Form = ({ students, setStudents, idx }) => {
-  const [inputs, setInputs] = useState({
+const Form = () => {
+  const initial = {
     name: "",
-    num: 0,
-  });
-
-  const onChangeInput = (e) => {
-    const { name, value } = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
+    content: "",
   };
+
+  const idx = useStudentId();
+  const dispatch = useStudentsDispatch();
+  const [form, onChange, reset] = useInputs(initial);
 
   const onClickCreateButton = () => {
-    const { name, num } = inputs;
-    setStudents([
-      ...students,
-      {
-        name,
-        num,
-        id: idx.current,
-      },
-    ]);
+    const { name, content } = form;
+    dispatch({
+      type: "CREATE",
+      name,
+      content,
+      id: idx.current,
+    });
 
     idx.current += 1;
-    setInputs({
-      name: "",
-      num: "",
-    });
+    reset();
   };
 
-  const { name, num } = inputs;
+  const { name, content } = form;
 
   return (
     <div>
       <label>이름</label>
-      <input type="text" onChange={onChangeInput} value={name} name="name" />
+      <input
+        type="text"
+        onChange={(e) => onChange(e)}
+        value={name}
+        name="name"
+      />
 
       <br />
 
-      <label>번호</label>
-      <input type="text" onChange={onChangeInput} value={num} name="num" />
+      <label>내용</label>
+      <input
+        type="text"
+        onChange={(e) => onChange(e)}
+        value={content}
+        name="content"
+      />
 
       <br />
 
