@@ -4,6 +4,7 @@ import Form from "./components/Form";
 import Array from "./components/Array";
 import List from "./components/useMemo/List";
 import Effect from "./components/Effect";
+import Styled from "./components/Styled";
 
 const App = () => {
   const [count, setCount] = useState(0);
@@ -18,12 +19,13 @@ const App = () => {
       {/* <Render count={[count, setCount]} />
       <Array /> */}
 
-      <h3>useMemo</h3>
+      {/*<h3>useMemo</h3>
       <List />
 
       <br/>
 
-      <Effect />
+      <Effect />*/}
+      <Styled />
     </div>
   );
 };
