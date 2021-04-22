@@ -1,6 +1,7 @@
 import React from "react";
 import useInputs from "./customHooks/useInputs";
 import { useStudentsDispatch, useStudentId } from "../Context/StudentsProvider";
+import { useTheme } from "styled-components";
 
 const Form = () => {
   const initial = {
@@ -11,6 +12,34 @@ const Form = () => {
   const idx = useStudentId();
   const dispatch = useStudentsDispatch();
   const [form, onChange, reset] = useInputs(initial);
+
+  const [user, setUser] = useState({
+    id: "arkc1009",
+    password: "asdfgh",
+    asdas: 12,
+    asdaw: 12,
+  });
+
+  setUser({
+    ...user,
+    [key]: value,
+  });
+
+  const obj = {
+    name: "HDJ",
+    password: "asdsad",
+  };
+
+  const onChange = (e, id) => {
+    const { name, value } = e.target;
+    setUser({
+      ...user,
+      [id]: value,
+    });
+  };
+
+  <input value={user.id} onChange={onChange} name="id" />;
+  <input value={user.password} onChange={onChange} name="password" />;
 
   const onClickCreateButton = () => {
     const { name, content } = form;
