@@ -5,27 +5,17 @@ import Array from "./components/Array";
 import List from "./components/useMemo/List";
 import Effect from "./components/Effect";
 import Styled from "./components/Styled";
+import Counter from "./components/Counter";
+import { CountProvider, SetCountProvider } from "./Provider/CountProvider";
 
 const App = () => {
-  const [count, setCount] = useState(0);
-  const [isRender, setIsRender] = useState(true);
-
   return (
     <div>
-      <div>{count}</div>
-      <button onClick={() => setCount(count + 1)}>+</button>
-      <button onClick={() => setCount(count - 1)}>-</button>
-
-      {/* <Render count={[count, setCount]} />
-      <Array /> */}
-
-      {/*<h3>useMemo</h3>
-      <List />
-
-      <br/>
-
-      <Effect />*/}
-      <Styled />
+      <CountProvider>
+        <SetCountProvider>
+          <Counter />
+        </SetCountProvider>
+      </CountProvider>
     </div>
   );
 };
